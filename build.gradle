@@ -16,7 +16,7 @@ plugins {
      minSdkVersion = 22
      targetSdkVersion = 33
      versionCode = 1
-     coreKtx = "1.8.0"
+     coreKtx = "1.10.0"
      appCompat = "1.6.1"
      archCore = "2.0.1"
      material = "1.8.0"
@@ -33,4 +33,6 @@ plugins {
      googlePlayCore = "1.6.1"
      kotlinCoroutines = "1.1.1"
      navVersion = "2.5.3"
+     retrofit = "2.7.2"
+     coil = "2.3.0"
  }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -36,12 +37,24 @@ dependencies {
     implementation(project(":feature-main"))
     implementation(project(":feature-details"))
 
-    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation "androidx.core:core-ktx:$coreKtx"
     implementation "androidx.appcompat:appcompat:$appCompat"
     implementation "com.google.android.material:material:$material"
     testImplementation "junit:junit:$jUnit"
     androidTestImplementation "androidx.test.ext:junit:$extJUnit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$okHttp3"
+
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+    //Dagger
+    implementation 'com.google.dagger:dagger:2.x'
+    kapt 'com.google.dagger:dagger-compiler:2.x'
+
 }
