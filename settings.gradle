@@ -16,3 +16,4 @@ rootProject.name = "SpaceXApp"
 include ':app'
 include ':feature-main'
 include ':feature-details'
+include ':core'

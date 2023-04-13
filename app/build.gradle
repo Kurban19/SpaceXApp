@@ -1,20 +1,20 @@
-plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.example.spacexapp'
-    compileSdk compileSdkVersion
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.spacexapp"
-        minSdk minSdk
-        targetSdk targetSdk
+        minSdk 22
+        targetSdk 33
         versionCode versionCode
         versionName versionName
+        multiDexEnabled true
 
+        buildConfigField "String", "SERVER_URL", '"https://api.spacexdata.com/v4/"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":feature-main"))
     implementation(project(":feature-details"))
 
@@ -54,7 +55,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
     //Dagger
-    implementation 'com.google.dagger:dagger:2.x'
-    kapt 'com.google.dagger:dagger-compiler:2.x'
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
 
+    implementation 'com.android.support:multidex:1.0.3'
 }
