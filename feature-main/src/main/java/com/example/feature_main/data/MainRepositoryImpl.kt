@@ -5,9 +5,9 @@ import com.example.core.domain.mapper.Either
 import com.example.feature_main.data.api.Filter
 import com.example.feature_main.data.api.MainService
 import com.example.feature_main.data.api.Options
-import com.example.feature_main.data.mapper.LauncherResponseMapper
+import com.example.feature_main.data.mapper.LaunchesResponseMapper
 import com.example.feature_main.domain.MainRepository
-import com.example.feature_main.domain.entity.Launch
+import com.example.core.domain.entity.Launch
 import javax.inject.Inject
 
 //val defaultFilter = Filter(
@@ -24,5 +24,5 @@ class MainRepositoryImpl @Inject constructor(
     private val mainService: MainService
 ) : MainRepository {
     override suspend fun getLaunches(): Either<List<Launch>> =
-        mainService.getLaunches(defaultFilter).toEither(LauncherResponseMapper())
+        mainService.getLaunches(defaultFilter).toEither(LaunchesResponseMapper())
 }

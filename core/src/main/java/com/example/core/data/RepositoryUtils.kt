@@ -11,17 +11,6 @@ fun <T> Response<T>.bodyOrThrow(): T {
     return body()!!
 }
 
-//fun <T : NetworkResponse, R> Response<T>.toResource(
-//    mapper: Mapper<T, R>,
-//): Resource<R> = bodyOrThrow()
-//    .let {
-//        try {
-//            mapper.map(it)
-//        } catch (e: Exception) {
-//            Resource.error(e.message.orEmpty(), null)
-//        }
-//    }
-
 fun <T : NetworkResponse, R> Response<T>.toEither(
     mapper: Mapper<T, R>,
 ): Either<R> = bodyOrThrow()

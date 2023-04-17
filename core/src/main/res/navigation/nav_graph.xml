@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_details">
 
         <argument
-            android:name="id"
+            android:name="launchId"
             android:defaultValue="None" />
 
     </fragment>

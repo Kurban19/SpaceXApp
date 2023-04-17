@@ -1,24 +1,18 @@
 package com.example.feature_main.data.api
 
 import android.os.Parcelable
-import com.example.feature_main.data.response.LaunchResponse
-import com.example.feature_main.data.response.LaunchesResponse
+import com.example.core.data.response.common.LaunchesResponse
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface MainService {
     @POST("launches/query")
     suspend fun getLaunches(
         @Body query: Filter,
     ): Response<LaunchesResponse>
-
-    @GET("v4/launches/{id}")
-    suspend fun fetchLaunchById(@Path("id") launchId: String): LaunchResponse
 }
 @Parcelize
 data class Filter(

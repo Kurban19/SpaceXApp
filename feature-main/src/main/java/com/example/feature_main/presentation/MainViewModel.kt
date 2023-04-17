@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.mapper.Either
 import com.example.feature_main.domain.MainInteractor
-import com.example.feature_main.domain.entity.Launch
+import com.example.core.domain.entity.Launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -18,13 +18,15 @@ class MainViewModel @Inject constructor(
     val launches = _launches.asStateFlow()
 
     init {
+        getLaunches()
+    }
+
+    private fun getLaunches() {
         viewModelScope.launch {
-            val result = interactor.fetchLaunches()
-            when (result) {
+            when (val result = interactor.fetchLaunches()) {
                 is Either.Success -> {
                     _launches.value = result.value
                 }
-
                 is Either.Failure -> {
                     // TODO
                 }

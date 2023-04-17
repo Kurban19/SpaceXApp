@@ -1,8 +1,6 @@
-package com.example.feature_main.data.response
+package com.example.core.data.response.common
 
 import android.os.Parcelable
-import com.example.core.data.response.common.Cores
-import com.example.core.data.response.common.Links
 import com.example.core.data.response.NetworkResponse
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -47,4 +45,6 @@ data class LaunchResponse(
     val cores: List<Cores>,
     @SerializedName("static_fire_date_utc")
     val fireDateUtc: String?,
+    @SerializedName("details")
+    val details: String?,
 ) : NetworkResponse, Parcelable
