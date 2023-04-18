@@ -22,7 +22,6 @@ import com.example.feature_details.presentation.adapter.CrewAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 class DetailsFragment : BaseFragment<DetailsViewModel>() {
 
     private lateinit var binding: FragmentDetailsBinding
@@ -32,7 +31,9 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
 
     private val viewModel: DetailsViewModel by viewModel()
 
-    private var crewAdapter: CrewAdapter? = null
+    private val crewAdapter: CrewAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        CrewAdapter()
+    }
 
     private var navController: NavController? = null
 
@@ -76,11 +77,13 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
                         binding.ivLaunch.load(it.links.patch.large)
                         binding.tvName.text = it.name
                         binding.tvSuccess.text = if (it.success) "Успешно" else "Провал"
-                        binding.tvLaunchDate.text =
-                            DateFormatter().format(
-                                it.fireDateUtc,
-                                DateConversion.DETAILS_DISPLAY_DATE
-                            )
+                        if (launcn.fireDateUtc.isNotBlank()) {
+                            binding.tvLaunchDate.text =
+                                DateFormatter().format(
+                                    it.fireDateUtc,
+                                    DateConversion.DETAILS_DISPLAY_DATE
+                                )
+                        }
                         binding.tvFlight.text = it.cores.sumOf { it.flight }.toString()
                         binding.tvDetails.text = it.details
                     }
@@ -92,14 +95,13 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect { crews ->
                     crews?.let {
-                        crewAdapter?.submitList(it)
+                        crewAdapter.submitList(it)
                     }
                 }
         }
     }
 
     private fun setUpRecyclerView() {
-        crewAdapter = CrewAdapter()
         binding.rvCrew.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvCrew.adapter = crewAdapter

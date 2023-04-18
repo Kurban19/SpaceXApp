@@ -1,28 +1,23 @@
 package com.example.feature_main.data
 
-import com.example.core.data.toEither
-import com.example.core.domain.mapper.Either
-import com.example.feature_main.data.api.Filter
-import com.example.feature_main.data.api.MainService
-import com.example.feature_main.data.api.Options
-import com.example.feature_main.data.mapper.LaunchesResponseMapper
-import com.example.feature_main.domain.MainRepository
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.core.domain.entity.Launch
+import com.example.feature_main.data.api.MainService
+import com.example.feature_main.data.paging.LaunchesPageSource
+import com.example.feature_main.domain.MainRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-//val defaultFilter = Filter(
-//    query = Query(dateUtc = mapOf("gt" to "2021-01-24T22:30:00.000Z")),
-//    options = Options(limit = 10, offset = 2, sort = mapOf("date_utc" to "asc"))
-//)
-
-val defaultFilter = Filter(
-//    query = Query(),
-    options = Options(limit = 10, offset = 10, page = 0)
-)
+private const val DEFAULT_PAGE_SIZE = 10
 
 class MainRepositoryImpl @Inject constructor(
-    private val mainService: MainService
+    private val mainService: MainService,
 ) : MainRepository {
-    override suspend fun getLaunches(): Either<List<Launch>> =
-        mainService.getLaunches(defaultFilter).toEither(LaunchesResponseMapper())
+    override fun getLaunches(): Flow<PagingData<Launch>> {
+        return Pager(PagingConfig(pageSize = DEFAULT_PAGE_SIZE)) {
+            LaunchesPageSource(mainService)
+        }.flow
+    }
 }

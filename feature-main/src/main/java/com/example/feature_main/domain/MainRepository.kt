@@ -1,8 +1,9 @@
 package com.example.feature_main.domain
 
-import com.example.core.domain.mapper.Either
+import androidx.paging.PagingData
 import com.example.core.domain.entity.Launch
+import kotlinx.coroutines.flow.Flow
 
 interface MainRepository  {
-    suspend fun getLaunches(): Either<List<Launch>>
+    fun getLaunches(): Flow<PagingData<Launch>>
 }

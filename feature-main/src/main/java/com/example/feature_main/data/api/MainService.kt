@@ -11,35 +11,36 @@ import retrofit2.http.POST
 interface MainService {
     @POST("launches/query")
     suspend fun getLaunches(
-        @Body query: Filter,
+        @Body query: Filter = Filter(),
     ): Response<LaunchesResponse>
 }
+
 @Parcelize
 data class Filter(
-//    @SerializedName("query")
-//    val query: com.example.feature_main.data.api.Query,
+    @SerializedName("query")
+    val query: Query = Query(),
     @SerializedName("options")
-    val options: Options
-): Parcelable
+    val options: Options = Options()
+) : Parcelable
 
 @Parcelize
 data class Query(
     @SerializedName("date_utc")
-    val dateUtc: Map<String, String> = emptyMap(),
-): Parcelable
+    val dateUtc: Map<String, String> = mapOf("\$gt" to "2021-01-24T22:30:00.000Z"),
+) : Parcelable
 
 @Parcelize
 data class Options(
     @SerializedName("page")
-    val page: Int,
+    val page: Int = 0,
     @SerializedName("limit")
-    val limit: Int,
+    val limit: Int = 10,
     @SerializedName("offset")
-    val offset: Int,
+    val offset: Int = 0,
     @SerializedName("sort")
-    val sort: Map<String, String> = emptyMap(),
+    val sort: Map<String, String> = mapOf("date_utc" to "asc"),
     @SerializedName("pagination")
     val pagination: Boolean = true
-): Parcelable
+) : Parcelable
 
 
